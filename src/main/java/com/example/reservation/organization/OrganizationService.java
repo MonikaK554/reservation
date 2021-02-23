@@ -1,6 +1,8 @@
 package com.example.reservation.organization;
 
 
+import com.example.reservation.organization.exception.NoOrganizationFoundException;
+import com.example.reservation.organization.exception.OrganizationAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class OrganizationService {
 
         organizationRepository.findById(organizationName)
                 .ifPresent(org -> {
-                    throw new IllegalArgumentException("This organization already exists");
+                    throw new OrganizationAlreadyExistsException(organizationName);
                 });
 
         return organizationRepository.save(organization);
@@ -33,16 +35,15 @@ public class OrganizationService {
         return organizationRepository.findAll();
     }
 
-    public Organization removeOrganization(String id){
+    public Organization removeOrganization(String id) {
 
         Organization organization = organizationRepository.findById(id)
                 .orElseThrow(() -> {
-                    throw new IllegalArgumentException("No such organization to delete");
+                    throw new NoOrganizationFoundException(id);
                 });
 
         organizationRepository.delete(organization);
         return organization;
-
 
 
     }

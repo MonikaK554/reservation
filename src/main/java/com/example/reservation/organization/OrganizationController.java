@@ -22,7 +22,7 @@ public class OrganizationController {
     }
 
     @PostMapping
-    public Organization addOrganization(@RequestBody Organization organization){
+    public Organization addOrganization(@RequestBody Organization organization) {
         return organizationService.addOrganization(organization);
     }
 
