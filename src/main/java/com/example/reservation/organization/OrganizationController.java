@@ -30,4 +30,14 @@ public class OrganizationController {
     public Organization removeOrganization(@PathVariable String id) {
         return organizationService.removeOrganization(id);
     }
+
+    @PutMapping("/{id}")
+    public Organization updateOrganization(@PathVariable String id, @RequestBody Organization organization) {
+        return organizationService.updateOrganization(id, organization);
+    }
+
+    @GetMapping("/{id}")
+    public Organization getOrganizationById(@PathVariable String id) {
+        return organizationService.getOrganizationById(id);
+    }
 }
