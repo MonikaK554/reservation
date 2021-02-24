@@ -35,13 +35,13 @@ class OrganizationRepositoryTest {
     @Test
     void when_db_contains_organization_with_name_org1_then_find_by_id_should_return_it() {
 
-        Organization organization = new Organization("org1", "opis1");
+        Organization organization = new Organization("org1", "desc1");
         testEntityManager.persist(organization);
 
         Optional<Organization> optOrg = organizationRepository.findById("org1");
 
         assertEquals("org1", optOrg.get().getName());
-        assertEquals("opis1", optOrg.get().getDescription());
+        assertEquals("desc1", optOrg.get().getDescription());
     }
 
 
