@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface OrganizationRepository extends JpaRepository<Organization, String> {
 
-    List<Organization> findByDescriptionContains(String part);
+    List<Organization> findByDescriptionContainsIgnoreCase(String part);
 }

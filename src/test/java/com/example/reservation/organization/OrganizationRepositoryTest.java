@@ -54,7 +54,7 @@ class OrganizationRepositoryTest {
         testEntityManager.persist(new Organization("org2", "org2IT"));
         testEntityManager.persist(new Organization("org3", "IT"));
 
-        List<Organization> itOrganizations = organizationRepository.findByDescriptionContains(descriptionPart);
+        List<Organization> itOrganizations = organizationRepository.findByDescriptionContainsIgnoreCase(descriptionPart);
 
         assertEquals(2, itOrganizations.size());
 
