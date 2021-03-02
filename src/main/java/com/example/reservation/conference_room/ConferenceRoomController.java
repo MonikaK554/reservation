@@ -19,12 +19,12 @@ public class ConferenceRoomController {
     }
 
     @GetMapping
-    public List<ConferenceRoom> getAllConferenceRooms() {
-        return conferenceRoomService.getAllConferenceRooms();
+    public List<ConferenceRoomDTO> getAllConferenceRooms() {
+        return conferenceRoomService.getAllConferenceRoomList();
     }
 
     @PostMapping
-    public ConferenceRoom addConferenceRoom(ConferenceRoom conferenceRoom) {
-        return conferenceRoomService.addConferenceRoom(conferenceRoom);
+    public ConferenceRoomDTO addConferenceRoom(ConferenceRoomDTO conferenceRoomDTO) {
+        return conferenceRoomService.addConferenceRoom(conferenceRoomDTO);
     }
 }

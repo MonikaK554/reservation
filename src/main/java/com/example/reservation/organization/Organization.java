@@ -17,6 +17,8 @@ public class Organization {
     private String name;
     private String description;
 
+
+
     @OneToMany(mappedBy = "organization")
     private List<ConferenceRoom> conferenceRooms = new ArrayList<>();
 
@@ -44,6 +46,13 @@ public class Organization {
         this.description = description;
     }
 
+    public List<ConferenceRoom> getConferenceRooms() {
+        return conferenceRooms;
+    }
+
+    public void setConferenceRooms(List<ConferenceRoom> conferenceRooms) {
+        this.conferenceRooms = conferenceRooms;
+    }
 
     @Override
     public boolean equals(Object o) {
