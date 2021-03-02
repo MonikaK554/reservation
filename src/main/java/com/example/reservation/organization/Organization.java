@@ -1,8 +1,13 @@
 package com.example.reservation.organization;
 
 
+import com.example.reservation.conference_room.ConferenceRoom;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -11,6 +16,9 @@ public class Organization {
     @Id
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "organization")
+    private List<ConferenceRoom> conferenceRooms = new ArrayList<>();
 
     public Organization() {
     }
