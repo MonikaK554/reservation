@@ -6,19 +6,23 @@ import com.example.reservation.organization.exception.OrganizationAlreadyExistsE
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrganizationService {
 
     private final OrganizationRepository organizationRepository;
+    private final OrganizationTransformer organizationTransformer;
 
 
-    public OrganizationService(OrganizationRepository organizationRepository) {
+    public OrganizationService(OrganizationRepository organizationRepository, OrganizationTransformer organizationTransformer) {
         this.organizationRepository = organizationRepository;
+        this.organizationTransformer = organizationTransformer;
     }
 
+    public OrganizationDTO addOrganization(OrganizationDTO organizationDTO) {
 
-    public Organization addOrganization(Organization organization) {
+        Organization organization = organizationTransformer.toEntity(organizationDTO);
 
         final String organizationName = organization.getName();
 
@@ -27,15 +31,17 @@ public class OrganizationService {
                     throw new OrganizationAlreadyExistsException(organizationName);
                 });
 
-        return organizationRepository.save(organization);
+        return organizationTransformer.toDTO(organizationRepository.save(organization));
 
     }
 
-    public List<Organization> getAllOrganizations() {
-        return organizationRepository.findAll();
+    public List<OrganizationDTO> getAllOrganizations() {
+        return organizationRepository.findAll().stream()
+                .map(organizationTransformer::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Organization removeOrganization(String id) {
+    public OrganizationDTO removeOrganization(String id) {
 
         Organization organization = organizationRepository.findById(id)
                 .orElseThrow(() -> {
@@ -43,10 +49,11 @@ public class OrganizationService {
                 });
 
         organizationRepository.delete(organization);
-        return organization;
+        return organizationTransformer.toDTO(organization);
     }
 
-    public Organization updateOrganization(String id, Organization organizationUpdate) {
+    public OrganizationDTO updateOrganization(String id, OrganizationDTO organizationUpdateDTO) {
+        Organization organizationUpdate = organizationTransformer.toEntity(organizationUpdateDTO);
         Organization organizationToUpdate = organizationRepository.findById(id)
                 .orElseThrow(() -> {
                     throw new NoOrganizationFoundException(id);
@@ -55,15 +62,15 @@ public class OrganizationService {
         if (newOrganizationDescription != null) {
             organizationToUpdate.setDescription(newOrganizationDescription);
         }
-        return organizationRepository.save(organizationToUpdate);
+        return organizationTransformer.toDTO(organizationRepository.save(organizationToUpdate));
     }
 
 
-    public Organization getOrganizationById(String id) {
-        return organizationRepository.findById(id)
+    public OrganizationDTO getOrganizationById(String id) {
+        return organizationTransformer.toDTO(organizationRepository.findById(id)
                 .orElseThrow(() -> {
                     throw new NoOrganizationFoundException(id);
-                });
+                }));
     }
 
 }

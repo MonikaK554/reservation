@@ -17,27 +17,27 @@ public class OrganizationController {
     }
 
     @GetMapping
-    public List<Organization> getAll() {
+    public List<OrganizationDTO> getAll() {
         return organizationService.getAllOrganizations();
     }
 
     @PostMapping
-    public Organization addOrganization(@RequestBody Organization organization) {
+    public OrganizationDTO addOrganization(@RequestBody OrganizationDTO organization) {
         return organizationService.addOrganization(organization);
     }
 
     @DeleteMapping("/{id}")
-    public Organization removeOrganization(@PathVariable String id) {
+    public OrganizationDTO removeOrganization(@PathVariable String id) {
         return organizationService.removeOrganization(id);
     }
 
     @PutMapping("/{id}")
-    public Organization updateOrganization(@PathVariable String id, @RequestBody Organization organization) {
+    public OrganizationDTO updateOrganization(@PathVariable String id, @RequestBody OrganizationDTO organization) {
         return organizationService.updateOrganization(id, organization);
     }
 
     @GetMapping("/{id}")
-    public Organization getOrganizationById(@PathVariable String id) {
+    public OrganizationDTO getOrganizationById(@PathVariable String id) {
         return organizationService.getOrganizationById(id);
     }
 }

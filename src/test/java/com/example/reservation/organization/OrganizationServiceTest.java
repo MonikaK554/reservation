@@ -24,7 +24,8 @@ class OrganizationServiceTest {
 
         @Bean
         public OrganizationService organizationService(OrganizationRepository organizationRepository) {
-            return new OrganizationService(organizationRepository);
+            return new OrganizationService(organizationRepository, new OrganizationTransformer(
+                    new OrganizationConferenceRoomTransformer()));
         }
     }
 
@@ -34,12 +35,13 @@ class OrganizationServiceTest {
     @Autowired
     OrganizationService organizationService;
 
+
     @Test
     void when_organization_exists_in_repo_then_find_by_id_should_return_it() {
         Mockito.when(organizationRepository.findById("org1"))
                 .thenReturn(Optional.of(new Organization("org1", "desc1")));
 
-        Organization organization = organizationService.getOrganizationById("org1");
+        OrganizationDTO organization = organizationService.getOrganizationById("org1");
 
         assertEquals("org1", organization.getName());
         assertEquals("desc1", organization.getDescription());
@@ -63,7 +65,7 @@ class OrganizationServiceTest {
         Organization organization = new Organization("org1", "desc1");
         Mockito.when(organizationRepository.save(organization)).thenReturn(organization);
 
-        Organization added = organizationService.addOrganization(organization);
+        OrganizationDTO added = organizationService.addOrganization(new OrganizationDTO(organization.getName(), organization.getDescription()));
 
         Mockito.verify(organizationRepository).save(organization);
         assertEquals("org1", added.getName());
@@ -76,7 +78,7 @@ class OrganizationServiceTest {
         Mockito.when(organizationRepository.findById("org1")).thenReturn(Optional.of(organization));
 
         assertThrows(OrganizationAlreadyExistsException.class, () -> {
-            organizationService.addOrganization(organization);
+            organizationService.addOrganization(new OrganizationDTO(organization.getName(), organization.getDescription()));
         });
 
         Mockito.verify(organizationRepository, Mockito.never()).save(organization);

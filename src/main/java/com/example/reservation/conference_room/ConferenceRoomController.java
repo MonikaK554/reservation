@@ -1,9 +1,6 @@
 package com.example.reservation.conference_room;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class ConferenceRoomController {
     }
 
     @PostMapping
-    public ConferenceRoomDTO addConferenceRoom(ConferenceRoomDTO conferenceRoomDTO) {
+    public ConferenceRoomDTO addConferenceRoom(@RequestBody ConferenceRoomDTO conferenceRoomDTO) {
         return conferenceRoomService.addConferenceRoom(conferenceRoomDTO);
     }
 }

@@ -45,8 +45,8 @@ class OrganizationControllerTest {
     void when_there_are_organizations_available_then_array_list_with_those_organizations_should_be_returned() throws Exception {
         //given
         Mockito.when(organizationService.getAllOrganizations()).thenReturn(Arrays.asList(
-                new Organization("org1", "org1 description"),
-                new Organization("org2", "org2 description")
+                new OrganizationDTO("org1", "org1 description"),
+                new OrganizationDTO("org2", "org2 description")
         ));
 
         //when
@@ -61,7 +61,7 @@ class OrganizationControllerTest {
     void when_request_organization_with_existing_id_then_the_organization_should_be_returned_as_json_object() throws Exception {
         //given
         String id = "org_test";
-        Mockito.when(organizationService.getOrganizationById(id)).thenReturn(new Organization(id, "description"));
+        Mockito.when(organizationService.getOrganizationById(id)).thenReturn(new OrganizationDTO(id, "description"));
 
         //when
         //then
@@ -89,7 +89,7 @@ class OrganizationControllerTest {
     @Test
     void when_send_post_request_to_add_organization_which_not_exist_in_system_then_organization_should_be_added_and_returned_as_json_object() throws Exception {
         //given
-        Organization organizationToAdd = new Organization("org_to_add", "org_to_add description");
+        OrganizationDTO organizationToAdd = new OrganizationDTO("org_to_add", "org_to_add description");
         Mockito.when(organizationService.addOrganization(organizationToAdd)).thenReturn(organizationToAdd);
 
         //when
@@ -105,7 +105,7 @@ class OrganizationControllerTest {
     @Test
     void when_send_post_request_to_add_organization_which_already_exist_in_system_then_organization_already_exits_exception_should_be_thrown() throws Exception {
         //given
-        Organization organizationToAdd = new Organization("org_to_add", "org_to_add description");
+        OrganizationDTO organizationToAdd = new OrganizationDTO("org_to_add", "org_to_add description");
         Mockito.when(organizationService.addOrganization(organizationToAdd)).thenThrow(new OrganizationAlreadyExistsException(organizationToAdd.getName()));
 
         //when
@@ -121,7 +121,7 @@ class OrganizationControllerTest {
     void when_send_delete_request_to_remove_organization_which_already_exist_in_system_then_organization_should_be_removed() throws Exception {
         //given
         String organizationId = "org_to_delete";
-        Organization organization = new Organization(organizationId, "organization to delete description");
+        OrganizationDTO organization = new OrganizationDTO(organizationId, "organization to delete description");
         Mockito.when(organizationService.removeOrganization(organizationId)).thenReturn(organization);
 
         //when
@@ -150,9 +150,9 @@ class OrganizationControllerTest {
     @Test
     void when_send_put_request_to_update_organization_which_already_exist_in_system_then_organization_should_be_updated() throws Exception {
         //given
-        Organization organizationToUpdate = new Organization(null, "new organization desc");
+        OrganizationDTO organizationToUpdate = new OrganizationDTO(null, "new organization desc");
         Mockito.when(organizationService.updateOrganization("org1", organizationToUpdate)).thenReturn(
-                new Organization("org1", "new organization desc"));
+                new OrganizationDTO("org1", "new organization desc"));
 
         //when
         //then
@@ -166,7 +166,7 @@ class OrganizationControllerTest {
     @Test
     void when_send_put_request_to_update_organization_which_is_not_exist_in_system_then_organization_not_found_exception_should_be_thrown() throws Exception {
         //given
-        Organization organizationToUpdate = new Organization(null, "new organization desc");
+        OrganizationDTO organizationToUpdate = new OrganizationDTO(null, "new organization desc");
         Mockito.when(organizationService.updateOrganization("org1", organizationToUpdate)).thenThrow(new NoOrganizationFoundException("org1"));
 
         //when
