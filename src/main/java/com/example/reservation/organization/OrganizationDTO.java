@@ -1,12 +1,27 @@
 package com.example.reservation.organization;
 
+import com.example.reservation.validation.Add;
+import com.example.reservation.validation.Update;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class OrganizationDTO {
 
+    @NotNull(groups = Add.class)
+    @NotEmpty(groups = Add.class)
+    @NotBlank(groups = Add.class)
+    @Size(min = 2, max = 20, groups = Add.class)
     private String name;
+
+    @NotNull(groups = {Add.class, Update.class})
+    @NotEmpty(groups = {Add.class, Update.class})
+    @NotBlank(groups = {Add.class, Update.class})
     private String description;
     private List<OrganizationConferenceRoomDTO> conferenceRooms = new ArrayList<>();
 

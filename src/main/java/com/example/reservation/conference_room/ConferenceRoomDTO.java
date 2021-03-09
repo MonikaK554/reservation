@@ -2,13 +2,30 @@ package com.example.reservation.conference_room;
 
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.*;
+
 public class ConferenceRoomDTO {
 
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    @Size(min = 2, max = 20)
     private String name;
+
     private String roomNumber;
+
+    @NotNull
     private boolean available;
+
+    @Min(0)
+    @Max(10)
     private int level;
+
+    @Min(1)
+    @Max(20)
     private int capacity;
+
+    @NotNull
     private String organizationName;
 
     public ConferenceRoomDTO() {
